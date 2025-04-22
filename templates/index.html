@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laptop Price Predictor</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--secondary-color);
+            font-size: 2rem;
+        }
+        
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        input[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            form {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Prediction result styling */
+        .prediction-result {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .price-display {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Laptop Price Prediction</h1>
+
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Brand</label>
+                <input type="text" name="brand" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Processor Brand</label>
+                <input type="text" name="processor_brand" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Processor Name</label>
+                <input type="text" name="processor_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Processor Generation</label>
+                <input type="text" name="processor_gnrtn" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>RAM (GB)</label>
+                <input type="number" name="ram_gb" required>
+            </div>
+            
+            <div class="form-group">
+                <label>RAM Type</label>
+                <input type="text" name="ram_type" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>SSD (GB)</label>
+                <input type="number" name="ssd" required>
+            </div>
+            
+            <div class="form-group">
+                <label>HDD (GB)</label>
+                <input type="number" name="hdd" required>
+            </div>
+        </div>
+        
+        <label>Operating System</label>
+        <input type="text" name="os" required>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>OS Bit</label>
+                <select name="os_bit" required>
+                    <option value="64">64</option>
+                    <option value="32">32</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Graphics Card (GB)</label>
+                <input type="number" name="graphic_card_gb" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Touchscreen</label>
+                <select name="Touchscreen" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>MS Office</label>
+                <select name="msoffice" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Number of Ratings</label>
+                <input type="number" name="Number of Ratings" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Number of Reviews</label>
+                <input type="number" name="Number of Reviews" required>
+            </div>
+        </div>
+
+        <input type="submit" value="Predict Price">
+    </form>
+
+    {% if prediction %}
+        <div class="prediction-result">
+            <h2>Predicted Price</h2>
+            <div class="price-display">₹{{ prediction }}</div>
+            <p>This is an estimated price based on the provided specifications</p>
+        </div>
+    {% endif %}
+</body>
+</html>
